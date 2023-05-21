@@ -1,6 +1,10 @@
-import movies from './movies.json' assert {type: 'json'};
+import moviesData from './movies.json' assert {type: 'json'};
 
-// let movies = require('./movies.json'); // importing json file as a data
+// let moviesData = require('./movies.json');
+
+let movies = { ...moviesData };
+
+//  // importing json file as a data
 
 // console.log('movies type is', typeof movies);
 
