@@ -14,6 +14,7 @@ const HOSTNAME = 'localhost';
 // For parsing application/json
 app.use(express.json());
 
+// Normal Operations with in memory storage
 // GET Method ---> READ
 app.get('/', function (req, res) {
   res.send('{ "name": "B42WEENG" }');
@@ -58,7 +59,6 @@ app.delete('/movies', (request, response) => {
   deleteMovie(movieName);
   response.send('{ "msg": "Movie Deleted Successfully" }');
 });
-
 
 app.listen(PORT, () => {
   console.log(`Server running at http://${HOSTNAME}:${PORT}/`);

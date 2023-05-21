@@ -8,6 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
     "express-dev": "nodemon server.js",
+    "express-db-dev": "nodemon server-db.js",
     "start": "node server.js"
   },
   "author": "",
@@ -16,6 +17,7 @@
     "nodemon": "^2.0.22"
   },
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "mongodb": "^5.5.0"
   }
 }
