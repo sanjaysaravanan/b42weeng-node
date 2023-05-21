@@ -2,7 +2,7 @@ import moviesData from './movies-data.js';
 
 // let moviesData = require('./movies.json');
 
-let movies = { ...moviesData };
+let movies = [...moviesData];
 
 //  // importing json file as a data
 
