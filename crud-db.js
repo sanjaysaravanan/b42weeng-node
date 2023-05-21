@@ -9,7 +9,7 @@ const readAll = async () => {
 
 // GET One Movies --> READ One
 const readOneMovie = async (movieId) => {
-  return await DbClient.db('test-compass').collection('movies').findOne({ '_id': new ObjectId(movieId) });
+  return await DbClient.db('test-compass').collection('movies').findOne({ 'id': new ObjectId(movieId) });
 }
 
 // create new movie --> CREATE
@@ -19,11 +19,11 @@ const createMovie = async (movieObj) => {
 
 // update one movie --> PUT
 const updateMovie = async (movieId, movieObj) => {
-  return await DbClient.db('test-compass').collection('movies').updateOne({ '_id': new ObjectId(movieId) }, { '$set': movieObj });
+  return await DbClient.db('test-compass').collection('movies').updateOne({ 'id': new ObjectId(movieId) }, { '$set': movieObj });
 }
 
 const deleteMovie = async (movieId) => {
-  return await DbClient.db('test-compass').collection('movies').deleteOne({ '_id': new ObjectId(movieId) });
+  return await DbClient.db('test-compass').collection('movies').deleteOne({ 'id': new ObjectId(movieId) });
 }
 
 
