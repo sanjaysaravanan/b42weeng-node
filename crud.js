@@ -1,4 +1,4 @@
-import moviesData from './movies.json' assert {type: 'json'};
+import moviesData from './movies-data.js';
 
 // let moviesData = require('./movies.json');
 
