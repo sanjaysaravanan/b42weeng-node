@@ -1,7 +1,8 @@
 // ES Module
 import express from 'express';
+import cors from 'cors';
 
-import DbClient from './mongo-db-client.js'
+import DbClient from './mongo-db-client.js';
 
 import { readAll, readOneMovie, createMovie, updateMovie, deleteMovie } from './crud-db.js';
 import { ObjectId } from 'mongodb';
@@ -17,7 +18,8 @@ console.log('Connected to the DB');
 // this is a latest feature nodejs which allows global asynchronous operation execution
 
 // For parsing application/json
-app.use(express.json());
+app.use(express.json()); // Middleware needed for passing data in post method
+app.use(cors());
 
 
 // GET All Movies API --> READ All
@@ -35,7 +37,7 @@ app.get('/movies/:movieId', async (request, response) => {
 
 app.post('/movies', async (request, response) => {
   const movieObj = request.body;
-  await createMovie({ id: new ObjectId().toString(), movieObj });
+  await createMovie({ id: new ObjectId().toString(), ...movieObj });
   response.send({ msg: 'Movie Created Successfully' });
 });
 
