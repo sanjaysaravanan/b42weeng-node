@@ -9,7 +9,8 @@
     "dev": "nodemon index.js",
     "express-dev": "nodemon server.js",
     "express-db-dev": "nodemon server-db.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "start-prod": "node server-db.js"
   },
   "author": "",
   "license": "ISC",
