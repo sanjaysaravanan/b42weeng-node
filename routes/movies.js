@@ -2,6 +2,7 @@
 // GET, POST, PUT, DELETE for movies
 
 import express from 'express';
+import { checkAdminAccessMiddleWare } from '../utils.js';
 
 import {
   readAll,
@@ -27,13 +28,13 @@ movieRouter.get('/:movieId', async (request, response) => {
   response.send(await readOneEntity('movies', movieId));
 });
 
-movieRouter.post('/', async (request, response) => {
+movieRouter.post('/', checkAdminAccessMiddleWare, async (request, response) => {
   const movieObj = request.body;
   await createEntity('movies', { id: new ObjectId().toString(), ...movieObj });
   response.send({ msg: 'Movie Created Successfully' });
 });
 
-movieRouter.put('/:movieId', async (request, response) => {
+movieRouter.put('/:movieId', checkAdminAccessMiddleWare, async (request, response) => {
   const movieObj = request.body;
   const { movieId } = request.params;
   await updateEntity('movies', movieId, movieObj);
@@ -41,7 +42,7 @@ movieRouter.put('/:movieId', async (request, response) => {
 });
 
 // path param
-movieRouter.delete('/:movieId', async (request, response) => {
+movieRouter.delete('/:movieId', checkAdminAccessMiddleWare, async (request, response) => {
   const { movieId } = request.params;
   await deleteEntity('movies', movieId)
   response.send({ msg: 'Movie Deleted Successfully' });

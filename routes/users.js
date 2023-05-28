@@ -10,6 +10,7 @@ import {
 } from '../crud-db.js';
 import { ObjectId } from 'mongodb';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 const usersRouter = express.Router();
 
@@ -44,11 +45,27 @@ usersRouter.post('/login', async (req, res) => {
 
   const userObj = await findWithQuery('users', { email });
 
-  if (userObj.password === password) {
-    res.send({ msg: 'Login Successfull' });
-  } else {
-    res.send({ msg: 'Invalid Credentials' });
-  }
+  await bcrypt.compare(password, userObj.password, async (err, result) => {
+    console.log('Match', result);
+    if (result) {
+      let role = userObj.role;
+      let responseToken = null;
+      // encryption role in jwt payload
+      await jwt.sign({ role }, process.env.TOKEN_SECRET, { expiresIn: '1d' }, function (err, token) {
+        console.log('Token', token);
+        responseToken = token;
+      });
+      delete userObj.password;
+      delete userObj.role;
+      res.send({
+        msg: 'Login Successfull',
+        ...userObj,
+        accessToken: responseToken
+      }); // response sends the details of the user
+    } else {
+      res.send({ msg: 'Invalid Credentials' });
+    }
+  });
 });
 
 // Update a user
