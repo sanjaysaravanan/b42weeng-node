@@ -30,11 +30,14 @@ usersRouter.get('/:userId', async (req, res) => {
 // Create a user
 usersRouter.post('/', async (req, res) => {
   const userObj = req.body;
-  console.log(userObj);
   await bcrypt.hash(userObj.password, 10, async function (_err, hash) {
     userObj.password = hash;
     console.log(userObj);
-    await createEntity('users', { id: new ObjectId().toString(), ...userObj });
+    await createEntity('users', {
+      id: new ObjectId().toString(),
+      ...userObj,
+      role: userObj.role || 'user'
+    });
   });
   res.send({ msg: 'User Created Successfully' });
 });
