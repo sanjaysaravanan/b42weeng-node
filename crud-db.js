@@ -3,8 +3,11 @@ import { ObjectId } from 'mongodb';
 import DbClient from './mongo-db-client.js'
 
 // GET All Movies -> READ ALL
-const readAll = async () => {
-  return await DbClient.db('test-compass').collection('movies').find(
+// entity name 
+// users ---> return all users
+// movies ---> return all movies
+const readAll = async (entityName) => {
+  return await DbClient.db('test-compass').collection(entityName).find(
     {},
     {
       projection: {
@@ -13,10 +16,10 @@ const readAll = async () => {
     }).toArray();
 };
 
-// GET One Movies --> READ One
-const readOneMovie = async (movieId) => {
-  return await DbClient.db('test-compass').collection('movies').findOne(
-    { 'id': movieId },
+// GET One Entity --> READ One
+const readOneEntity = async (entityName, entityId) => {
+  return await DbClient.db('test-compass').collection(entityName).findOne(
+    { 'id': entityId },
     {
       projection: {
         _id: 0
@@ -26,23 +29,41 @@ const readOneMovie = async (movieId) => {
 }
 
 // create new movie --> CREATE
-const createMovie = async (movieObj) => {
-  return await DbClient.db('test-compass').collection('movies').insertOne(movieObj);
+const createEntity = async (entityName, entityObj) => {
+  return await DbClient.db('test-compass').collection(entityName).insertOne(
+    entityObj
+  );
 }
 
-// update one movie --> PUT
-const updateMovie = async (movieId, movieObj) => {
-  return await DbClient.db('test-compass').collection('movies').updateOne({ 'id': movieId }, { '$set': movieObj });
+// update one entity --> PUT
+const updateEntity = async (entityName, entityId, entityObj) => {
+  return await DbClient.db('test-compass').collection(entityName).updateOne(
+    { 'id': entityId },
+    { '$set': entityObj }
+  );
 }
 
-const deleteMovie = async (movieId) => {
-  return await DbClient.db('test-compass').collection('movies').deleteOne({ 'id': movieId });
+const deleteEntity = async (entityName, entityId) => {
+  return await DbClient.db('test-compass').collection(entityName).deleteOne(
+    { 'id': entityId });
+}
+
+const findWithQuery = async (entityName, query) => {
+  return await DbClient.db('test-compass').collection(entityName).findOne(
+    query,
+    {
+      projection: {
+        _id: 0
+      }
+    }
+  );
 }
 
 export {
   readAll,
-  readOneMovie,
-  createMovie,
-  updateMovie,
-  deleteMovie,
+  readOneEntity,
+  createEntity,
+  updateEntity,
+  deleteEntity,
+  findWithQuery
 }
